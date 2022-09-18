@@ -1,16 +1,27 @@
 const app = Vue.createApp({
   data() {
     return {
-      output1: "",
-      output2: "",
+      number: 0,
+      enough: false,
+      timeout: setTimeout(() => {
+        this.number = 0;
+      }, 5000),
     };
   },
-  methods: {
-    showAlert: function () {
-      alert("hey");
+  watch: {
+    number() {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        this.number = 0;
+      }, 5000);
     },
-    keymonitor: function (event) {
-      this.output2 = event.target.value;
+  },
+  methods: {
+    add: function (number) {
+      this.number += number;
+      if (this.number > 37) {
+        this.enough = true;
+      }
     },
   },
 });
